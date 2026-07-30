@@ -1,0 +1,25 @@
+{
+  "name": "@scrapfly-mcp/scrape-server",
+  "version": "0.1.0",
+  "description": "MCP server exposing Scrapfly single-page scrape, screenshot, and account tools",
+  "type": "module",
+  "main": "build/index.js",
+  "bin": { "scrapfly-scrape-server": "./build/index.js" },
+  "files": ["build"],
+  "scripts": {
+    "build": "tsc -b",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.11.4",
+    "@scrapfly-mcp/core": "*",
+    "scrapfly-sdk": "^0.11.0",
+    "zod": "^3.25.16"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.21",
+    "typescript": "^5.8.3",
+    "vitest": "^3.0.0"
+  }
+}

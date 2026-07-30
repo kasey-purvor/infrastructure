@@ -1,0 +1,44 @@
+# =============================================================================
+# infrastructure — .gitignore
+# =============================================================================
+# This repo tracks the SELF-AUTHORED tools that exist nowhere else. Anything
+# that is already a git repo with its own remote is EXCLUDED and documented in
+# README.md ("clone these here") — one source of truth each, no nested repos.
+# -----------------------------------------------------------------------------
+
+# --- separately-versioned repos (see README.md for remotes) ------------------
+tools/ticket-panel/
+tools/claude-hooks/
+tools/mcp-d2-diagrams/
+tools/mcp-markdown-to-pdf/
+tools/mcp-trello/
+tools/mcp-google-workspace/
+
+# --- abandoned upstream clones (recoverable from upstream if ever wanted) ----
+tools/_archive/
+
+# --- dependencies & caches (regenerate) --------------------------------------
+node_modules/
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+
+# --- secrets safety net ------------------------------------------------------
+# Carry the shape, never the value. Note: patterns cover BOTH `foo.env` and
+# files literally named `env` or `.env*` (the dev-environment repo's audit
+# found `*.env` alone misses the latter — don't repeat that hole here).
+*.env
+.env
+.env.*
+env
+!*.env.example
+!*.env.template
+!.env.example
+!.env.template
+*.pem
+*.key
+id_*
+**/.credentials.json
+**/hosts.yml
+token

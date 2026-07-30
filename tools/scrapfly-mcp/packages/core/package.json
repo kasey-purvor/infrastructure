@@ -1,0 +1,25 @@
+{
+  "name": "@scrapfly-mcp/core",
+  "version": "0.1.0",
+  "description": "Shared Scrapfly client, key loading, error mapping, and MCP helpers",
+  "type": "module",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "exports": { ".": { "types": "./build/index.d.ts", "import": "./build/index.js" } },
+  "files": ["build"],
+  "scripts": {
+    "build": "tsc -b",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.11.4",
+    "scrapfly-sdk": "^0.11.0",
+    "zod": "^3.25.16"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.21",
+    "typescript": "^5.8.3",
+    "vitest": "^3.0.0"
+  }
+}
