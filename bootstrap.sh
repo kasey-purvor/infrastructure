@@ -22,7 +22,7 @@ NESTED_REPOS=(
   "ticket-panel          https://github.com/kasey-purvor/ticket-panel.git"
   "claude-hooks          https://github.com/kasey-purvor/claude-hooks.git"
   "mcp-d2-diagrams       https://github.com/kasey-purvor/mcp-d2-diagrams.git"
-  "mcp-markdown-to-pdf   https://github.com/simonhaenisch/md-to-pdf.git"
+  "mcp-markdown-to-pdf   https://github.com/kasey-purvor/mcp-markdown-to-pdf.git"   # fork + MCP wrapper; upstream: simonhaenisch/md-to-pdf
   "mcp-trello            https://github.com/kocakli/Trello-Desktop-MCP.git"
   "mcp-google-workspace  https://github.com/taylorwilsdon/google_workspace_mcp.git"
 )
