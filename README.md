@@ -43,3 +43,12 @@ Things that depend on this directory existing at `~/dev_wsl/infrastructure`:
 Never commit secret values. `.gitignore` blocks `*.env`, bare `env`, `token`,
 keys, and credentials; templates/examples (`*.env.template`, `*.env.example`)
 are allowed. Runtime secrets live outside git and are re-created per machine.
+
+## Bootstrap (fresh machine)
+
+```bash
+./bootstrap.sh           # clone the nested tool repos, build the Node MCP servers, install the Python CLIs
+./bootstrap.sh --force   # rebuild everything
+```
+
+Three manifests at the top of `bootstrap.sh` are the only thing to edit when a tool is added: `NESTED_REPOS` (own-repo dirs that `.gitignore` excludes), `NODE_BUILDS` (dirs with a `build` script), `PYTHON_TOOLS` (dirs installed with `uv tool`). `dev-environment/scripts/provision.sh` calls this after cloning the repo.
