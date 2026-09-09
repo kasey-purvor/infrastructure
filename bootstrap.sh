@@ -9,6 +9,7 @@
 #                 own git repos (see .gitignore) -> cloned if absent
 #   NODE_BUILDS   dirs with a package.json build script -> npm ci && npm run build
 #   PYTHON_TOOLS  dirs with a pyproject [project.scripts] -> uv tool install
+#   BIN_LINKS     "<name> <path under tools/>" -> ~/.local/bin/<name> symlink (no build)
 #
 # Called by dev-environment/scripts/provision.sh (step 6) and runnable by
 # hand. Idempotent; a failure in one tool warns and moves on (exit 1 at the
@@ -34,6 +35,9 @@ NODE_BUILDS=(
 )
 PYTHON_TOOLS=(
   ticket-panel
+)
+BIN_LINKS=(   # single-file tools exposed on PATH as ~/.local/bin/<name> -> tools/<path>
+  "graph-mail            graph-mail/graph-mail.mjs"
 )
 
 log()  { printf '\033[1;34m[bootstrap]\033[0m %s\n' "$*"; }
@@ -86,6 +90,21 @@ for name in "${PYTHON_TOOLS[@]}"; do
   else
     uv tool install --force "$dir" >/dev/null || warn "$name: uv tool install failed"
   fi
+done
+
+# --- 4. bin links ------------------------------------------------------------
+# Zero-build, single-file tools: just put them on PATH. Idempotent; a stale or
+# foreign file at the link path is left alone and reported.
+mkdir -p "$HOME/.local/bin"
+for entry in "${BIN_LINKS[@]}"; do
+  read -r name rel <<<"$entry"
+  src="$TOOLS/$rel"; dst="$HOME/.local/bin/$name"
+  [ -f "$src" ] || { warn "$name: $src missing (not cloned?)"; continue; }
+  chmod +x "$src"
+  if [ -L "$dst" ] && [ "$(readlink "$dst")" = "$src" ]; then continue; fi
+  if [ -e "$dst" ] && [ ! -L "$dst" ]; then warn "$name: $dst exists and is not a symlink — leaving alone"; continue; fi
+  log "linking $dst -> $src"
+  ln -sfn "$src" "$dst"
 done
 
 [ "$FAILED" = 0 ] && log "done" || { log "done with failures (see WARN lines)"; exit 1; }
